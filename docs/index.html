@@ -49,16 +49,22 @@
 
   <script type="text/javascript" src="./js/canvas.bundle.js"></script>
   <script>
+
     const fileInput = document.querySelector('#file-js-example input[type=file]');
     fileInput.onchange = () => {
       if (fileInput.files.length > 0) {
         const fileName = document.querySelector('#file-js-example .file-name');
         fileName.textContent = fileInput.files[0].name;
-        let url = location.href;                
-        location.href = "#canvas";               
-        history.replaceState(null, null, url);  
+
+        
+
+        let url = location.href;
+        location.href = "#canvas";
+        history.replaceState(null, null, url);
       }
     }
+
+
   </script>
 <script type="text/javascript" src="./js/canvas.bundle.js"></script></body>
 
