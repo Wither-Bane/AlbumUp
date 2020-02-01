@@ -96,10 +96,36 @@
 "use strict";
 
 
+var _data = __webpack_require__(/*! ./data.json */ "./src/js/data.json");
+
+var _data2 = _interopRequireDefault(_data);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var canvas = document.querySelector('canvas');
-var c = canvas.getContext('2d');
+var ctx = canvas.getContext('2d');
 canvas.width = innerWidth;
 canvas.height = innerHeight;
+
+var dataLength = _data2.default.data.length;
+for (var i = 0; i < dataLength; i++) {
+  var d = _data2.default.data[i];
+
+  console.log(d.length);
+}
+ctx.fillStyle = 0xFFFFFF;
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+/***/ }),
+
+/***/ "./src/js/data.json":
+/*!**************************!*\
+  !*** ./src/js/data.json ***!
+  \**************************/
+/*! exports provided: data, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"data\":[[0.5,10],[1.5,5]]}");
 
 /***/ })
 
