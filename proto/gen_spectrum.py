@@ -1,8 +1,8 @@
-"""Generate a dummy spectrum changing over time."""
-import numpy as np
-import scipy.stats
+"""Generate json spectrum data."""
+from spectrum import arma_estimate, arma2psd, marple_data
+from pylab import plot, axis, xlabel, ylabel, grid, log10
 import json
 with open('dummy.json', 'w') as f:
-    data = json.dumps([list(scipy.stats.norm.pdf(np.linspace(-8, 8, 8), loc=i))
-                       for i in range(-8, 8)])
-    print(data, file=f)
+    ar, ma, rho = arma_estimate(marple_data, 15, 15, 30)
+    psd = arma2psd(ar, ma, rho=rho, NFFT=4096)
+    print(json.dumps(list(psd)), file=f)
