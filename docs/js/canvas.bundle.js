@@ -112,53 +112,41 @@ canvas.height = innerHeight;
 ctx.fillStyle = 0xFFFFFF;
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-var bars = 64;
-var avg = [];
-for (var i = 0; i < bars; i++) {
-  var l = Math.floor(_data3.default.length / bars);
-  var data = _data3.default.slice(i * l, (i + 1) * l);
-  avg.push(Math.log(get_average(data)));
-}
-var m = 0;
-for (var _i = 0; _i < avg.length; _i++) {
-  if (Math.abs(avg[_i]) > m) {
-    m = Math.abs(avg[_i]);
+draw_line(_data3.default, 10);
+
+function draw_line(d, thickness) {
+  var bars = 64;
+  var avg = [];
+  for (var i = 0; i < bars; i++) {
+    var l = Math.floor(d.length / bars);
+    var data = d.slice(i * l, (i + 1) * l);
+    avg.push(Math.log(get_average(data)));
+  }
+  var m = 0;
+  for (var _i = 0; _i < avg.length; _i++) {
+    if (Math.abs(avg[_i]) > m) {
+      m = Math.abs(avg[_i]);
+    }
+  }
+  for (var _i2 = 0; _i2 < bars; _i2++) {
+    var _l = Math.floor(_data3.default.length / bars);
+    var _data = d.slice(_i2 * _l, (_i2 + 1) * _l);
+    var a = avg[_i2];
+    draw_bar(_i2 * canvas.width / bars, canvas.width / bars, m, Math.abs(avg[_i2]), colors[_i2], thickness);
   }
 }
-for (var _i2 = 0; _i2 < bars; _i2++) {
-  var _l = Math.floor(_data3.default.length / bars);
-  var _data = _data3.default.slice(_i2 * _l, (_i2 + 1) * _l);
-  var a = avg[_i2];
-  draw_bar(_i2 * canvas.width / bars, canvas.width / bars, m, Math.abs(avg[_i2]), colors[_i2]);
-}
 
-function draw_bar(x, w, max, avg, color) {
+function draw_bar(x, w, max, avg, color, th) {
   ctx.fillStyle = "rgba(255, 255, 255," + (1 - (avg + max) / (2 * max)) + ")";
-  ctx.fillRect(x, 0, w, canvas.height / 2);
+  ctx.fillRect(x, 0, w, th);
 }
 
 function get_average(arr) {
   var sum = 0;
-  for (var _i3 = 0; _i3 < arr.length; _i3++) {
-    sum += arr[_i3];
+  for (var i = 0; i < arr.length; i++) {
+    sum += arr[i];
   }return sum / arr.length;
 }
-
-// Old code
-var max = 0;
-for (var _i4 = 0; _i4 < _data3.default.length; _i4++) {
-  if (Math.abs(Math.log(_data3.default[_i4])) > max) {
-    max = Math.abs(Math.log(_data3.default[_i4]));
-  }
-}
-
-ctx.strokeStyle = "#FFFFFF";
-ctx.lineWidth = 5;
-ctx.moveTo(0, canvas.height / 2);
-for (var j = 0; j < _data3.default.length; j++) {
-  ctx.lineTo((j + 1) * (canvas.width / _data3.default.length), canvas.height / 2 - Math.log(_data3.default[j]) * (canvas.height / 2 / max));
-}
-ctx.stroke();
 
 /***/ }),
 
