@@ -1,4 +1,4 @@
-import Data from './data.json';
+import Data from './dummy.json';
 
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
@@ -10,12 +10,12 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 console.log(Data.length);
 
 for (let i = 0; i < Data.length; i++) {
-  draw_line(Data[i], canvas.height/Data.length, i)
+  draw_line(Data[i], canvas.height/Data.length, i);
 }
-draw_graph(Data[0])
+draw_graph(Data[100])
 
 function draw_line(d, thickness, y) {
-  let bars = 64;
+  let bars = 512;
   let avg = [];
   for (let i = 0; i < bars; i++) {
     let l = Math.floor(d.length/bars);
