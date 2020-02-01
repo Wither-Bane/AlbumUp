@@ -11,15 +11,31 @@
     body {
       margin: 0;
     }
+    .new-blue{
+        background-color: #8ea4e5 !important;
+    }
+    span {
+      padding-left: 0.00001em;
+      padding-right: 0.00001em;
+    }
+
   </style>
   <link rel="shortcut icon" href="favicon.ico">
 <link rel="shortcut icon" href="favicon.ico"></head>
 
 <body>
-  <section class="hero is-link is-fullheight">
+  <section class="hero new-blue is-fullheight">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h1 class="title is-spaced ">AlbumUp!</h1>
+        <h1 class="title is-1 is-spaced">
+        <span style='color: #876189'>A</span>
+        <span style='color: #afd68b'>l</span>
+        <span style='color: #fff291'>b</span>
+        <span style='color: #e57f62'>u</span>
+        <span style='color: #fff291'>m</span>
+        <span style='color: #afd68b'>U</span>
+        <span style='color: #876189'>p</span>
+      </h1>
         <h2 class="subtitle">
           <!-- TODO -->
         </h2>
@@ -56,7 +72,7 @@
         const fileName = document.querySelector('#file-js-example .file-name');
         fileName.textContent = fileInput.files[0].name;
 
-        
+
 
         let url = location.href;
         location.href = "#canvas";
