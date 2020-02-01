@@ -96,9 +96,9 @@
 "use strict";
 
 
-var _data = __webpack_require__(/*! ./data.json */ "./src/js/data.json");
+var _data2 = __webpack_require__(/*! ./data.json */ "./src/js/data.json");
 
-var _data2 = _interopRequireDefault(_data);
+var _data3 = _interopRequireDefault(_data2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -112,24 +112,53 @@ canvas.height = innerHeight;
 ctx.fillStyle = 0xFFFFFF;
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-var max = 0;
-for (var i = 0; i < _data2.default.length; i++) {
-  if (Math.abs(Math.log(_data2.default[i])) > max) {
-    max = Math.abs(Math.log(_data2.default[i]));
+var bars = 64;
+var avg = [];
+for (var i = 0; i < bars; i++) {
+  var l = Math.floor(_data3.default.length / bars);
+  var data = _data3.default.slice(i * l, (i + 1) * l);
+  avg.push(Math.log(get_average(data)));
+}
+var m = 0;
+for (var _i = 0; _i < avg.length; _i++) {
+  if (Math.abs(avg[_i]) > m) {
+    m = Math.abs(avg[_i]);
   }
 }
-max *= 1.1;
+for (var _i2 = 0; _i2 < bars; _i2++) {
+  var _l = Math.floor(_data3.default.length / bars);
+  var _data = _data3.default.slice(_i2 * _l, (_i2 + 1) * _l);
+  var a = avg[_i2];
+  draw_bar(_i2 * canvas.width / bars, canvas.width / bars, m, Math.abs(avg[_i2]), colors[_i2]);
+}
 
-ctx.lineWidth = 5;
-for (var _i = 0; _i < colors.length; _i++) {
-  ctx.strokeStyle = colors[_i];
-  ctx.beginPath();
-  ctx.moveTo((Math.floor(_i * (_data2.default.length / colors.length)) + 1) * (canvas.width / _data2.default.length), canvas.height / 2 - Math.log(_data2.default[Math.floor(_i * (_data2.default.length / colors.length))]) * (canvas.height / 2 / max));
-  for (var j = Math.floor(_i * (_data2.default.length / colors.length)); j < (_i + 1) * (_data2.default.length / 5); j++) {
-    ctx.lineTo((j + 1) * (canvas.width / _data2.default.length), canvas.height / 2 - Math.log(_data2.default[j]) * (canvas.height / 2 / max));
-  }
-  ctx.stroke();
+function draw_bar(x, w, max, avg, color) {
+  ctx.fillStyle = "rgba(255, 255, 255," + (1 - (avg + max) / (2 * max)) + ")";
+  ctx.fillRect(x, 0, w, canvas.height / 2);
 }
+
+function get_average(arr) {
+  var sum = 0;
+  for (var _i3 = 0; _i3 < arr.length; _i3++) {
+    sum += arr[_i3];
+  }return sum / arr.length;
+}
+
+// Old code
+var max = 0;
+for (var _i4 = 0; _i4 < _data3.default.length; _i4++) {
+  if (Math.abs(Math.log(_data3.default[_i4])) > max) {
+    max = Math.abs(Math.log(_data3.default[_i4]));
+  }
+}
+
+ctx.strokeStyle = "#FFFFFF";
+ctx.lineWidth = 5;
+ctx.moveTo(0, canvas.height / 2);
+for (var j = 0; j < _data3.default.length; j++) {
+  ctx.lineTo((j + 1) * (canvas.width / _data3.default.length), canvas.height / 2 - Math.log(_data3.default[j]) * (canvas.height / 2 / max));
+}
+ctx.stroke();
 
 /***/ }),
 
