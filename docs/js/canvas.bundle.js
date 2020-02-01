@@ -102,6 +102,8 @@ var _data2 = _interopRequireDefault(_data);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var colors = ['#BA89B6', '#A3AFFF', '#DBFFB5', '#FFECA0', '#FF907A'];
+
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 canvas.width = innerWidth;
@@ -116,14 +118,18 @@ for (var i = 0; i < _data2.default.length; i++) {
     max = Math.abs(Math.log(_data2.default[i]));
   }
 }
+max *= 1.1;
 
-ctx.strokeStyle = "#FFFFFF";
 ctx.lineWidth = 5;
-ctx.moveTo(0, canvas.height / 2);
-for (var j = 0; j < _data2.default.length; j++) {
-  ctx.lineTo((j + 1) * (canvas.width / _data2.default.length), canvas.height / 2 - Math.log(_data2.default[j]) * (canvas.height / 2 / max));
+for (var _i = 0; _i < colors.length; _i++) {
+  ctx.strokeStyle = colors[_i];
+  ctx.beginPath();
+  ctx.moveTo((Math.floor(_i * (_data2.default.length / colors.length)) + 1) * (canvas.width / _data2.default.length), canvas.height / 2 - Math.log(_data2.default[Math.floor(_i * (_data2.default.length / colors.length))]) * (canvas.height / 2 / max));
+  for (var j = Math.floor(_i * (_data2.default.length / colors.length)); j < (_i + 1) * (_data2.default.length / 5); j++) {
+    ctx.lineTo((j + 1) * (canvas.width / _data2.default.length), canvas.height / 2 - Math.log(_data2.default[j]) * (canvas.height / 2 / max));
+  }
+  ctx.stroke();
 }
-ctx.stroke();
 
 /***/ }),
 
