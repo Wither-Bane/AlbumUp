@@ -2,7 +2,7 @@ FROM node:13.5.0-alpine
 
 WORKDIR /usr/src/app
 
-# ENV PATH /usr/src/app/node_modules/.bin:$PATH
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 COPY . .
 RUN npm install

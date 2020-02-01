@@ -5,7 +5,7 @@ services:
   py:
       build:
         context: ./server
-        dockerfile: ./Dockerfile.prod
+        dockerfile: ./Dockerfile
       volumes:
         - './server:/usr/src/app'
       ports:
@@ -14,14 +14,14 @@ services:
         - FLASK_APP=project/__init__.py
         - FLASK_ENV=development
 
-  # js:
-  #   build:
-  #     context: ./client
-  #     dockerfile: Dockerfile.prod
-  #   volumes:
-  #     - '.:/usr/src/app'
-  #     - '/usr/src/app/node_modules'
-  #   ports:
-  #     - 3008:3000
-  #   environment:
-  #     - NODE_ENV=production
+  js:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - './client:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - 3007:3000
+    environment:
+      - NODE_ENV=production
