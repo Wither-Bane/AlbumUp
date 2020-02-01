@@ -1,6 +1,5 @@
 """Convert audio data into PSD."""
 import soundfile
-import numpy as np
 from spectrum import Periodogram
 
 
