@@ -3,25 +3,25 @@ version: '3.7'
 services:
 
   py:
-    build:
-      context: ./server
-      dockerfile: ./Dockerfile.prod
-    volumes:
-      - '.:/usr/src/app'
-    ports:
-      - 5003:5000
-    environment:
-      - FLASK_APP=project/__init__.py
-      - FLASK_ENV=production
+      build:
+        context: ./server
+        dockerfile: ./Dockerfile.prod
+      volumes:
+        - './server:/usr/src/app'
+      ports:
+        - 5001:5000
+      environment:
+        - FLASK_APP=project/__init__.py
+        - FLASK_ENV=development
 
-  js:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.prod
-    volumes:
-      - '.:/usr/src/app'
-      - '/usr/src/app/node_modules'
-    ports:
-      - 3008:3000
-    environment:
-      - NODE_ENV=production
+  # js:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile.prod
+  #   volumes:
+  #     - '.:/usr/src/app'
+  #     - '/usr/src/app/node_modules'
+  #   ports:
+  #     - 3008:3000
+  #   environment:
+  #     - NODE_ENV=production
