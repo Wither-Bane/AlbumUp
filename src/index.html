@@ -1,16 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Canvas Boilerplates</title>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Canvas Boilerplates</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+  <section class="hero is-link is-fullheight">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title is-spaced ">AlbumUp!</h1>
+        <h2 class="subtitle">
+          <!-- TODO -->
+        </h2>
+        <div class="buttons is-centered">
+          <div id="file-js-example" class="file has-name">
+            <label class="file-label">
+              <input class="file-input" type="file" name="resume" href="#canvas">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  Choose a file…
+                </span>
+              </span>
+              <span class="file-name">
+                No file uploaded
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <canvas id="canvas"></canvas>
+  </section>
+
+  <script type="text/javascript" src="./js/canvas.bundle.js"></script>
+  <script>
+
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+      if (fileInput.files.length > 0) {
+        const fileName = document.querySelector('#file-js-example .file-name');
+        fileName.textContent = fileInput.files[0].name;
+
+        
+
+        let url = location.href;
+        location.href = "#canvas";
+        history.replaceState(null, null, url);
       }
-    </style>
-  </head>
-  <body>
-    <canvas></canvas>
-  </body>
+    }
+
+
+  </script>
+</body>
+
 </html>
