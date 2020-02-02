@@ -106,24 +106,12 @@ var _colors2 = _interopRequireDefault(_colors);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const colors = [
-//   '#1BE7FF',
-//   '#6EEB83',
-//   '#E4FF1A',
-//   '#E8AA14',
-//   '#FF5714'
-// ]
-
 document.querySelector("#text").value = JSON.stringify(_ourdata2.default, undefined, 2);
 
 var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = innerHeight;
 canvas.height = innerHeight;
-
-ctx.fillStyle = "hsl(0, 0%, 4%)";
-
-ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 generateArt(_ourdata2.default);
 
@@ -132,6 +120,8 @@ document.getElementById("play").addEventListener("click", function () {
 }, false);
 
 function generateArt(data) {
+  ctx.fillStyle = "hsl(0, 0%, 4%)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   var bpm = parseInt(data.header.tempos.bpm);
   var dataLength = data.tracks.length;
   // assume: songDuration = last note of first track
