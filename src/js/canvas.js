@@ -1,14 +1,6 @@
 import data from "./ourdata.json";
 import colors from "./colors";
 
-// const colors = [
-//   '#1BE7FF',
-//   '#6EEB83',
-//   '#E4FF1A',
-//   '#E8AA14',
-//   '#FF5714'
-// ]
-
 document.querySelector("#text").value = JSON.stringify(data, undefined, 2);
 
 const canvas = document.querySelector("canvas");
@@ -18,18 +10,21 @@ canvas.height = innerHeight;
 
 generateArt(data);
 
-
-document.getElementById("tone-play-toggle").addEventListener("click", () => {
-  generateArt(JSON. parse(document.getElementById("text").value));
-
+document.getElementById("play").addEventListener("click", () => {
+  generateArt(JSON.parse(document.getElementById("text").value));
 }, false);
 
 function generateArt(data) {
+<<<<<<< HEAD
 
   ctx.fillStyle = "hsl(0, 0%, 4%)";
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+=======
+  ctx.fillStyle = "hsl(0, 0%, 4%)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+>>>>>>> 6c9f0b327a526993c5cbe4e5c63ed6cf493164fd
   let bpm = parseInt(data.header.tempos.bpm);
   let dataLength = data.tracks.length;
   // assume: songDuration = last note of first track

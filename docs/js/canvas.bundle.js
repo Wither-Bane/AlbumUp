@@ -106,14 +106,6 @@ var _colors2 = _interopRequireDefault(_colors);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// const colors = [
-//   '#1BE7FF',
-//   '#6EEB83',
-//   '#E4FF1A',
-//   '#E8AA14',
-//   '#FF5714'
-// ]
-
 document.querySelector("#text").value = JSON.stringify(_ourdata2.default, undefined, 2);
 
 var canvas = document.querySelector("canvas");
@@ -123,16 +115,25 @@ canvas.height = innerHeight;
 
 generateArt(_ourdata2.default);
 
+<<<<<<< HEAD
 document.getElementById("tone-play-toggle").addEventListener("click", function () {
+=======
+document.getElementById("play").addEventListener("click", function () {
+>>>>>>> 6c9f0b327a526993c5cbe4e5c63ed6cf493164fd
   generateArt(JSON.parse(document.getElementById("text").value));
 }, false);
 
 function generateArt(data) {
+<<<<<<< HEAD
 
   ctx.fillStyle = "hsl(0, 0%, 4%)";
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+=======
+  ctx.fillStyle = "hsl(0, 0%, 4%)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+>>>>>>> 6c9f0b327a526993c5cbe4e5c63ed6cf493164fd
   var bpm = parseInt(data.header.tempos.bpm);
   var dataLength = data.tracks.length;
   // assume: songDuration = last note of first track
