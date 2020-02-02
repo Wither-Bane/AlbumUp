@@ -1,5 +1,5 @@
-import data from './data.json';
-import colors from './colors';
+import data from "./ourdata.json";
+import colors from "./colors";
 
 // const colors = [
 //   '#1BE7FF',
@@ -11,22 +11,23 @@ import colors from './colors';
 
 document.querySelector("#text").value = JSON.stringify(data, undefined, 2);
 
-const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d');
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
 canvas.width = innerHeight;
 canvas.height = innerHeight;
 
-ctx.fillStyle = 'hsl(0, 0%, 4%)';
+ctx.fillStyle = "hsl(0, 0%, 4%)";
 
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 generateArt(data);
 
 function generateArt(data) {
-
-  let bpm = parseInt(data.header.bpm);
+  let bpm = parseInt(data.header.tempos.bpm);
   let dataLength = data.tracks.length;
-  let timeScale = canvas.height / data.duration;
+  // assume: songDuration = last note of first track
+  let songDuration = data.tracks[0].notes[data.tracks[0].notes.length - 1].time;
+  let timeScale = canvas.height / songDuration;
   let minNote = 25;
   let maxNote = 90;
   let dif = canvas.height / (maxNote - minNote);
@@ -38,14 +39,22 @@ function generateArt(data) {
     console.log(data.tracks[i]);
     for (let j = 0; j < d.length; j++) {
       c++;
-      ctx.fillStyle = 'rgb(' + colors[c % index][0] +
-        ',' + colors[c % index][1] +
-        ',' + colors[c % index][2] +
-        ')';
+      ctx.fillStyle =
+        "rgb(" +
+        colors[c % index][0] +
+        "," +
+        colors[c % index][1] +
+        "," +
+        colors[c % index][2] +
+        ")";
 
       let note = d[j];
-      ctx.fillRect((note.midi - minNote) * dif, note.time * timeScale, dif, note.duration * timeScale);
+      ctx.fillRect(
+        (note.midi - minNote) * dif,
+        note.time * timeScale,
+        dif,
+        note.duration * timeScale
+      );
     }
   }
-
 }
