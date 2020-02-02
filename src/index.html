@@ -69,6 +69,7 @@
       </div>
       <textarea id="text" class="textarea slim padded " placeholder="data....." readonly></textarea>
       <div class="buttons padded">
+        <button class="button is-fullwidth is-success" id="play">Generate Image</i></button>
         <button class="button is-fullwidth is-success" id="tone-play-toggle" onclick="playFile()"><i
             class="fas fa-play"></i></button>
       </div>
@@ -91,7 +92,7 @@
       }
     }
 
-    let currentMidi = document.querySelector("#text").value;
+    let currentMidi = JSON.parse(document.querySelector("#text").value);
     function parseFile(file) {
       //read the file
       const reader = new FileReader()
