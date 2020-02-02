@@ -16,10 +16,6 @@ const ctx = canvas.getContext("2d");
 canvas.width = innerHeight;
 canvas.height = innerHeight;
 
-ctx.fillStyle = "hsl(0, 0%, 4%)";
-
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
 generateArt(data);
 
 
@@ -29,20 +25,38 @@ document.getElementById("tone-play-toggle").addEventListener("click", () => {
 }, false);
 
 function generateArt(data) {
+
+  ctx.fillStyle = "hsl(0, 0%, 4%)";
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   let bpm = parseInt(data.header.tempos.bpm);
   let dataLength = data.tracks.length;
   // assume: songDuration = last note of first track
   let songDuration = data.tracks[0].notes[data.tracks[0].notes.length - 1].time;
   let timeScale = canvas.height / songDuration;
-  let minNote = 25;
-  let maxNote = 90;
+  let minNote = 200;
+  let maxNote = 0;
+  for (let i = 0; i < dataLength; i++) {
+    let d = data.tracks[i].notes
+    for (let j = 0; j < d.length; j++) {
+      let n = d[j];
+      if (n.midi < minNote) {
+        minNote = n.midi;
+      }
+      if (n.midi > maxNote) {
+        maxNote = n.midi;
+      }
+    }
+  }
+  minNote--;
+  maxNote++;
   let dif = canvas.height / (maxNote - minNote);
   let index = colors.length;
   let c = 0;
 
   for (let i = 0; i < dataLength; i++) {
     let d = data.tracks[i].notes;
-    console.log(data.tracks[i]);
     for (let j = 0; j < d.length; j++) {
       c++;
       ctx.fillStyle =

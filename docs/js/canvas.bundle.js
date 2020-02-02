@@ -121,32 +121,50 @@ var ctx = canvas.getContext("2d");
 canvas.width = innerHeight;
 canvas.height = innerHeight;
 
-ctx.fillStyle = "hsl(0, 0%, 4%)";
-
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
 generateArt(_ourdata2.default);
 
+document.getElementById("tone-play-toggle").addEventListener("click", function () {
+  generateArt(JSON.parse(document.getElementById("text").value));
+}, false);
+
 function generateArt(data) {
+
+  ctx.fillStyle = "hsl(0, 0%, 4%)";
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   var bpm = parseInt(data.header.tempos.bpm);
   var dataLength = data.tracks.length;
   // assume: songDuration = last note of first track
   var songDuration = data.tracks[0].notes[data.tracks[0].notes.length - 1].time;
   var timeScale = canvas.height / songDuration;
-  var minNote = 25;
-  var maxNote = 90;
+  var minNote = 200;
+  var maxNote = 0;
+  for (var i = 0; i < dataLength; i++) {
+    var d = data.tracks[i].notes;
+    for (var j = 0; j < d.length; j++) {
+      var n = d[j];
+      if (n.midi < minNote) {
+        minNote = n.midi;
+      }
+      if (n.midi > maxNote) {
+        maxNote = n.midi;
+      }
+    }
+  }
+  minNote--;
+  maxNote++;
   var dif = canvas.height / (maxNote - minNote);
   var index = _colors2.default.length;
   var c = 0;
 
-  for (var i = 0; i < dataLength; i++) {
-    var d = data.tracks[i].notes;
-    console.log(data.tracks[i]);
-    for (var j = 0; j < d.length; j++) {
+  for (var _i = 0; _i < dataLength; _i++) {
+    var _d = data.tracks[_i].notes;
+    for (var _j = 0; _j < _d.length; _j++) {
       c++;
       ctx.fillStyle = "rgb(" + _colors2.default[c % index][0] + "," + _colors2.default[c % index][1] + "," + _colors2.default[c % index][2] + ")";
 
-      var note = d[j];
+      var note = _d[_j];
       ctx.fillRect((note.midi - minNote) * dif, note.time * timeScale, dif, note.duration * timeScale);
     }
   }
