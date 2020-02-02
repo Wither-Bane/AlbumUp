@@ -15,16 +15,11 @@ document.getElementById("play").addEventListener("click", () => {
 }, false);
 
 function generateArt(data) {
-<<<<<<< HEAD
 
   ctx.fillStyle = "hsl(0, 0%, 4%)";
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-=======
-  ctx.fillStyle = "hsl(0, 0%, 4%)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
->>>>>>> 6c9f0b327a526993c5cbe4e5c63ed6cf493164fd
   let bpm = parseInt(data.header.tempos.bpm);
   let dataLength = data.tracks.length;
   // assume: songDuration = last note of first track
