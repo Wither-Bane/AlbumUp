@@ -11,55 +11,52 @@
     body {
       margin: 0;
     }
-    .new-blue{
-        background-color: #8ea4e5 !important;
+
+    .new-blue {
+      background-color: #8ea4e5 !important;
     }
+
+    .fixed {
+      position: absolute;
+      right: 0;
+      padding: 1.5%;
+    }
+
     span {
       padding-left: 0.00001em;
       padding-right: 0.00001em;
     }
 
+    canvas {
+      margin: auto;
+    }
   </style>
   <link rel="shortcut icon" href="favicon.ico">
 <link rel="shortcut icon" href="favicon.ico"></head>
 
 <body>
-  <section class="hero new-blue">
-    <div class="hero-body">
-      <div class="container has-text-centered">
-        <h1 class="title is-1 is-spaced">
-        <span style='color: #876189'>A</span>
-        <span style='color: #afd68b'>l</span>
-        <span style='color: #fff291'>b</span>
-        <span style='color: #e57f62'>u</span>
-        <span style='color: #fff291'>m</span>
-        <span style='color: #afd68b'>U</span>
-        <span style='color: #876189'>p</span>
+
+  <section class="hero is-dark">
+    <div class="fixed">
+      <h1 class="title is-1 is-spaced">
+        <span style='color: #fff291'>Album
+          <span style='color: #e57f62'>Up</span>
       </h1>
-        <h2 class="subtitle">
-          <!-- TODO -->
-        </h2>
-        <div class="buttons is-centered">
-          <div id="file-js-example" class="file has-name">
-            <label class="file-label">
-              <input class="file-input" type="file" name="resume" href="#canvas">
-              <span class="file-cta">
-                <span class="file-icon">
-                  <i class="fas fa-upload"></i>
-                </span>
-                <span class="file-label">
-                  Choose a file…
-                </span>
-              </span>
-              <span class="file-name">
-                No file uploaded
-              </span>
-            </label>
-          </div>
-        </div>
+      <div id="file-js-example" class="is-info is-pulled-right file">
+        <label class="file-label">
+          <input class="file-input" type="file" name="music">
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Choose a file…
+            </span>
+          </span>
+        </label>
       </div>
     </div>
-    </div>
+
     <canvas id="canvas"></canvas>
   </section>
 
@@ -69,11 +66,8 @@
     const fileInput = document.querySelector('#file-js-example input[type=file]');
     fileInput.onchange = () => {
       if (fileInput.files.length > 0) {
-        const fileName = document.querySelector('#file-js-example .file-name');
-        fileName.textContent = fileInput.files[0].name;
-
-
-
+        let fileName= fileInput.files[0].name;
+        console.log(fileName);
         let url = location.href;
         location.href = "#canvas";
         history.replaceState(null, null, url);
