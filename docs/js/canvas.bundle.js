@@ -127,10 +127,6 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 generateArt(_ourdata2.default);
 
-document.getElementById("tone-play-toggle").addEventListener("click", function () {
-  generateArt(JSON.parse(document.getElementById("text").value));
-}, false);
-
 function generateArt(data) {
   var bpm = parseInt(data.header.tempos.bpm);
   var dataLength = data.tracks.length;
