@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tonejs/midi": "^2.0.15",
     "gsap": "^2.0.1"
   },
   "devDependencies": {
