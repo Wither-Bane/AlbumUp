@@ -55,7 +55,7 @@
           <span style='color: #e57f62'>Up</span>
       </h1>
       <div id="file-js-example" class="is-info is-boxed file padded is-pulled-right">
-        <label class="file-label">
+        <label class=" file-label">
           <input class="file-input" type="file" name="music">
           <span class="file-cta">
             <span class="file-icon">
@@ -67,7 +67,7 @@
           </span>
         </label>
       </div>
-      <textarea id="text" class="textarea slim padded " placeholder="data....."></textarea>
+      <textarea id="text" class="textarea slim padded " placeholder="data....." readonly></textarea>
       <div class="buttons padded">
         <button class="button is-fullwidth is-success" id="tone-play-toggle" onclick="playFile()"><i
             class="fas fa-play"></i></button>
@@ -91,6 +91,7 @@
       }
     }
 
+    let currentMidi = document.querySelector("#text").value;
     function parseFile(file) {
       //read the file
       const reader = new FileReader()
@@ -105,11 +106,9 @@
     }
 
     function playFile() {
-      alert("wow");
       const synths = [];
       const playing = document.querySelector("#text").value;
       if (playing) {
-        alert("pow");
 
         const now = Tone.now() + 0.5;
         currentMidi.tracks.forEach(track => {
