@@ -6,6 +6,9 @@
   <title>Canvas Boilerplates</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/tone@13.4.9/build/Tone.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/@tonejs/ui@0.0.8/build/tonejs-ui.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/@tonejs/midi"></script>
 
   <style>
     body {
@@ -27,6 +30,15 @@
       padding-right: 0.00001em;
     }
 
+    .slim {
+      height: 300px;
+      width: 100px;
+    }
+
+    .padded {
+      padding: 5%;
+    }
+
     canvas {
       margin: auto;
     }
@@ -42,7 +54,7 @@
         <span style='color: #fff291'>Album
           <span style='color: #e57f62'>Up</span>
       </h1>
-      <div id="file-js-example" class="is-info is-pulled-right file">
+      <div id="file-js-example" class="is-info is-boxed file padded is-pulled-right">
         <label class="file-label">
           <input class="file-input" type="file" name="music">
           <span class="file-cta">
@@ -55,9 +67,16 @@
           </span>
         </label>
       </div>
+      <textarea id="text" class="textarea slim padded " placeholder="data....."></textarea>
+      <div class="buttons padded">
+        <button class="button is-fullwidth is-success" id="tone-play-toggle" onclick="playFile()"><i
+            class="fas fa-play"></i></button>
+      </div>
+
     </div>
 
     <canvas id="canvas"></canvas>
+
   </section>
 
   <script type="text/javascript" src="./js/canvas.bundle.js"></script>
@@ -66,11 +85,55 @@
     const fileInput = document.querySelector('#file-js-example input[type=file]');
     fileInput.onchange = () => {
       if (fileInput.files.length > 0) {
-        let fileName= fileInput.files[0].name;
-        console.log(fileName);
-        let url = location.href;
-        location.href = "#canvas";
-        history.replaceState(null, null, url);
+        let file = fileInput.files[0];
+        console.log(file.name);
+        parseFile(file);
+      }
+    }
+
+    function parseFile(file) {
+      //read the file
+      const reader = new FileReader()
+      reader.onload = function (e) {
+        const midi = new Midi(e.target.result)
+        document.querySelector("#text").value = (JSON.stringify(midi, undefined, 2));
+        document.querySelector('#tone-play-toggle').removeAttribute('disabled');
+        currentMidi = midi
+      }
+      reader.readAsArrayBuffer(file);
+
+    }
+
+    function playFile() {
+      alert("wow");
+      const synths = [];
+      const playing = document.querySelector("#text").value;
+      if (playing) {
+        alert("pow");
+
+        const now = Tone.now() + 0.5;
+        currentMidi.tracks.forEach(track => {
+          //create a synth for each track
+          const synth = new Tone.PolySynth(10, Tone.Synth, {
+            envelope: {
+              attack: 0.02,
+              decay: 0.1,
+              sustain: 0.3,
+              release: 1
+            }
+          }).toMaster()
+          synths.push(synth);
+          //schedule all of the events
+          track.notes.forEach(note => {
+            synth.triggerAttackRelease(note.name, note.duration, note.time + now, note.velocity);
+          })
+        })
+      } else {
+        //dispose the synth and make a new one
+        while (synths.length) {
+          const synth = synths.shift();
+          synth.dispose();
+        }
       }
     }
 

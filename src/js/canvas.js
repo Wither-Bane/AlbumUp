@@ -1,5 +1,4 @@
 import data from './data.json';
-import { Midi } from '@tonejs/midi';
 import colors from './colors';
 
 // const colors = [
@@ -10,18 +9,14 @@ import colors from './colors';
 //   '#FF5714'
 // ]
 
-// const Data = Midi.fromUrl('./test1.mid');
+document.querySelector("#text").value = JSON.stringify(data, undefined, 2);
+
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = innerHeight;
 canvas.height = innerHeight;
-const file = 
 
 ctx.fillStyle = 'hsl(0, 0%, 4%)';
-// document.body.style.background = 'rgb(' + colors[bpm][0] +
-//   ',' + colors[bpm][1] +
-//   ',' + colors[bpm][2] +
-//   ')';
 
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
